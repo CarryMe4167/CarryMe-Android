@@ -7,6 +7,17 @@
         android:layout_height="match_parent"
         tools:context=".Driver">
 
+    <fragment
+        android:id="@+id/driverMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="371dp"
+        android:layout_height="307dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.247" />
+
     <Button
             android:text="Sign Out"
             android:layout_width="wrap_content"
@@ -16,4 +27,28 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintVertical_bias="0.023"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/requestedRidesRecycler"
+        android:layout_width="382dp"
+        android:layout_height="216dp"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.84" />
+
+    <Button
+        android:id="@+id/newRideOfferButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Offer New Ride"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/requestedRidesRecycler"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 </androidx.constraintlayout.widget.ConstraintLayout>

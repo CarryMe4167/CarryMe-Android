@@ -49,6 +49,7 @@ class Register : AppCompatActivity() {
                     val user = User(username, email, password, phone, nid, category, drivingLicence)
                     ref.document("$uid").set(user)
                         .addOnSuccessListener {
+                            Log.d("Deets", "success")
                             Toast.makeText(this, "Added $category $username to database", Toast.LENGTH_SHORT).show()
                             val user_now = FirebaseAuth.getInstance().currentUser
                             val username_update = UserProfileChangeRequest.Builder()
