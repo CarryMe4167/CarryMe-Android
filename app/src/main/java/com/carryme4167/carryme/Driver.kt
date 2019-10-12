@@ -1,6 +1,8 @@
 package com.carryme4167.carryme
 
+import android.app.Activity
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -10,13 +12,13 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationListener
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -30,6 +32,7 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     LocationListener, GoogleMap.OnMarkerClickListener {
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+        private const val REQUEST_CHECK_SETTINGS = 2
     }
 
     override fun onConnected(p0: Bundle?) {
@@ -45,7 +48,7 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     }
 
     override fun onLocationChanged(p0: Location?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("dhur ghorar dim")
     }
 
     override fun onMarkerClick(p0: Marker?) = false
@@ -53,6 +56,10 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
+
+    private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
+    private var locationUpdateState = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +71,21 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         mapFragment.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult) {
+                super.onLocationResult(p0)
+
+                lastLocation = p0.lastLocation
+                val location = LocationData(FirebaseAuth.getInstance().uid.toString(), lastLocation.latitude, lastLocation.longitude, FirebaseAuth.getInstance().currentUser?.displayName.toString())
+                val dbref = FirebaseFirestore.getInstance().collection("locationUpdatesDrivers").document("${FirebaseAuth.getInstance().uid.toString()}")
+                dbref.set(location)
+                    .addOnSuccessListener {
+                        Log.d("LOCATION", "Updated location for ${FirebaseAuth.getInstance().uid} successfully")
+                    }
+                placeMarkersOnMap()
+            }
+        }
 
         signOutBUtton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -77,6 +99,7 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             startActivity(intent)
         }
 
+        createLocationRequest()
         fetchrides()
     }
 
@@ -87,6 +110,31 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         mMap.setOnMarkerClickListener(this)
 
         setUpMap()
+    }
+
+    // 1
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            if (resultCode == Activity.RESULT_OK) {
+                locationUpdateState = true
+                startLocationUpdates()
+            }
+        }
+    }
+
+    // 2
+    override fun onPause() {
+        super.onPause()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    // 3
+    public override fun onResume() {
+        super.onResume()
+        if (!locationUpdateState) {
+            startLocationUpdates()
+        }
     }
 
     fun fetchrides()
@@ -122,6 +170,27 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         }
     }
 
+    fun placeMarkersOnMap() {
+        mMap.clear()
+        val dbref = FirebaseFirestore.getInstance().collection("locationUpdatesPassengers")
+        dbref.addSnapshotListener { snap, e ->
+            if ( e != null )
+            {
+                Log.d("MARKERS", "${e.message}")
+            }
+            else
+            {
+                for ( doc in snap!! )
+                {
+                    val locationObj = doc.toObject(LocationData::class.java)
+                    val markerOptions = MarkerOptions().position(LatLng(locationObj.lat, locationObj.long)).title(locationObj.name.toString()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                    mMap.addMarker(markerOptions)
+                }
+            }
+        }
+    }
+
+
     fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -138,10 +207,51 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 16f))
             }
         }
 
     }
 
+    fun startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE)
+            return
+        }
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null /* Looper */)
+    }
+    fun createLocationRequest() {
+        locationRequest = LocationRequest()
+        locationRequest.interval = 10000
+        locationRequest.fastestInterval = 5000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+
+        val client = LocationServices.getSettingsClient(this)
+        val task = client.checkLocationSettings(builder.build())
+
+        task.addOnSuccessListener {
+            locationUpdateState = true
+            startLocationUpdates()
+        }
+        task.addOnFailureListener { e ->
+            if (e is ResolvableApiException) {
+                // Location settings are not satisfied, but this can be fixed
+                // by showing the user a dialog.
+                try {
+                    // Show the dialog by calling startResolutionForResult(),
+                    // and check the result in onActivityResult().
+                    e.startResolutionForResult(this@Driver,
+                        REQUEST_CHECK_SETTINGS)
+                } catch (sendEx: IntentSender.SendIntentException) {
+                    // Ignore the error.
+                }
+            }
+        }
+    }
 }
