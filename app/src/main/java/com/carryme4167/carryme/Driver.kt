@@ -110,6 +110,10 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         mMap.setOnMarkerClickListener(this)
 
         setUpMap()
+
+//        mMap.setOnMapClickListener {
+//            Log.d("TEST", "New co-ordinates are ${it.latitude}, ${it.longitude}")
+//        }
     }
 
     // 1
