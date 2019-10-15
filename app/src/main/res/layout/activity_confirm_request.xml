@@ -41,26 +41,14 @@
         app:layout_constraintTop_toBottomOf="@+id/to"
         app:layout_constraintVertical_bias="0.036" />
 
-    <TextView
-        android:id="@+id/pickuplocation"
-        android:layout_width="0dp"
-        android:layout_height="49dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/pickuptime"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/pickuptime"
-        app:layout_constraintTop_toBottomOf="@+id/pickuptime"
-        app:layout_constraintVertical_bias="0.036" />
-
     <Button
         android:id="@+id/confirmContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm and Contact"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/pickuplocation"
-        app:layout_constraintStart_toStartOf="@+id/pickuplocation"
-        app:layout_constraintTop_toBottomOf="@+id/pickuplocation" />
+        app:layout_constraintTop_toBottomOf="@+id/pickuptime"
+        app:layout_constraintVertical_bias="0.634"
+        tools:layout_editor_absoluteX="113dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,5 @@ class RidesRequestedAdapter (val requestedRide: RequestRideObject): Item<Groupie
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.rideQuickInfo.setText("From: ${requestedRide.from} To: ${requestedRide.to}")
         viewHolder.itemView.pickuptime.setText("Pickup time: ${requestedRide.pickuptime}")
-        viewHolder.itemView.pickuplocation.setText("Pickup location: ${requestedRide.pickuplocation}")
     }
 }

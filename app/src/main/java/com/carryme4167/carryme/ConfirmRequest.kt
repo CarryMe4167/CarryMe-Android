@@ -16,12 +16,11 @@ class ConfirmRequest : AppCompatActivity() {
         setContentView(R.layout.activity_confirm_request)
 
         val ride_item_temp = intent.getParcelableExtra<RequestRideObject>("Ride")
-        Toast.makeText(this, "${ride_item_temp.from.toString()} to ${ride_item_temp.to.toString()} at ${ride_item_temp.pickuptime.toString()} for ${ride_item_temp.pickuplocation.toString()}", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "${ride_item_temp.from.toString()} to ${ride_item_temp.to.toString()} at ${ride_item_temp.pickuptime.toString()} for ${ride_item_temp.pickuplocation.toString()}", Toast.LENGTH_SHORT).show()
 
         from.setText(ride_item_temp.from.toString())
         to.setText(ride_item_temp.to.toString())
         pickuptime.setText(ride_item_temp.pickuptime.toString())
-        pickuplocation.setText(ride_item_temp.pickuplocation.toString())
 
         confirmContact.setOnClickListener {
             getDetails(ride_item_temp.passengerUID, ride_item_temp.from, ride_item_temp.to)

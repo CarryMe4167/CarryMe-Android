@@ -45,11 +45,6 @@ class SupportMap : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Conn
 
         mMap.setOnMapClickListener {
             Log.d("TEST", "New co-ordinates are ${it.latitude}, ${it.longitude}")
-//            val locData = MapData(it.latitude, it.longitude)
-//            Log.d("BUNDLELOL", "Going from SupportMap back with bundle ${locData.lat}, ${locData.long}")
-//            val back = Intent(this, OfferRide::class.java)
-//            back.putExtra("locdata", locData)
-//            startActivity(back)
             val lat = it.latitude
             val long = it.longitude
             Log.d("TEST", "New co-ordinates (lat, long) are $lat, $long")
