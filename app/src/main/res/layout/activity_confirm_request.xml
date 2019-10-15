@@ -6,16 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".ConfirmRequest">
 
+    <fragment
+        android:id="@+id/confirmMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="371dp"
+        android:layout_height="307dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037" />
+
     <TextView
         android:id="@+id/from"
+        android:layout_width="250dp"
+        android:layout_height="49dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.532" />
+
+    <TextView
+        android:id="@+id/pickuptime"
         android:layout_width="384dp"
         android:layout_height="49dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.133" />
+        app:layout_constraintTop_toBottomOf="@+id/to"
+        app:layout_constraintVertical_bias="0.089" />
 
     <TextView
         android:id="@+id/to"
@@ -24,22 +47,22 @@
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/from"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/from"
         app:layout_constraintTop_toBottomOf="@+id/from"
-        app:layout_constraintVertical_bias="0.036" />
+        app:layout_constraintVertical_bias="0.07" />
 
     <TextView
-        android:id="@+id/pickuptime"
+        android:id="@+id/cost"
         android:layout_width="0dp"
         android:layout_height="49dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/to"
+        app:layout_constraintEnd_toEndOf="@+id/pickuptime"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/to"
-        app:layout_constraintTop_toBottomOf="@+id/to"
-        app:layout_constraintVertical_bias="0.036" />
+        app:layout_constraintStart_toStartOf="@+id/pickuptime"
+        app:layout_constraintTop_toBottomOf="@+id/pickuptime"
+        app:layout_constraintVertical_bias="0.165" />
 
     <Button
         android:id="@+id/confirmContact"
@@ -47,8 +70,32 @@
         android:layout_height="wrap_content"
         android:text="Confirm and Contact"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/pickuptime"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/pickuptime"
         app:layout_constraintTop_toBottomOf="@+id/pickuptime"
-        app:layout_constraintVertical_bias="0.634"
-        tools:layout_editor_absoluteX="113dp" />
+        app:layout_constraintVertical_bias="0.75" />
+
+    <Button
+        android:id="@+id/markFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pin on map"
+        app:layout_constraintBottom_toBottomOf="@+id/from"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toEndOf="@+id/from"
+        app:layout_constraintTop_toTopOf="@+id/from"
+        app:layout_constraintVertical_bias="0.53" />
+
+    <Button
+        android:id="@+id/markTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pin on map"
+        app:layout_constraintBottom_toBottomOf="@+id/to"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/to"
+        app:layout_constraintTop_toTopOf="@+id/to" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

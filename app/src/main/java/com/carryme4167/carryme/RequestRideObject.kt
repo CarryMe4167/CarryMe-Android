@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class RequestRideObject(val from: String, val to: String,  val pickuptime: String, val passengerUID: String): Parcelable
+class RequestRideObject(val from: String, val to: String,  val pickuptime: String, val passengerUID: String, val fromlat: Double, val fromlong: Double, val tolat: Double, val tolong: Double): Parcelable
 {
-    constructor() : this("", "", "",  "")
+    constructor() : this("", "", "",  "", 0.0, 0.0, 0.0, 0.0)
 }

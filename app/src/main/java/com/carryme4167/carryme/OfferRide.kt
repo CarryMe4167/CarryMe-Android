@@ -8,17 +8,35 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_offer_new_ride.*
 import java.io.IOException
 
-class OfferRide : AppCompatActivity() {
+class OfferRide : AppCompatActivity(), OnMapReadyCallback{
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+    }
+
     companion object
     {
         private const val FROM_CODE = 1
         private const val TO_CODE = 2
     }
+
+    private lateinit var mMap: GoogleMap
+    private var fromlatD: Double = 0.0
+    private var fromlongD: Double = 0.0
+    private var tolatD: Double = 0.0
+    private var tolongD: Double = 0.0
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -28,10 +46,15 @@ class OfferRide : AppCompatActivity() {
             {
                 val lat = data?.getDoubleExtra("locdatalat", 0.0)
                 val long = data?.getDoubleExtra("locdatalong", 0.0)
+                fromlatD = lat!!
+                fromlongD = long!!
                 Log.d("TEST", "Received $lat, $long")
                 val address = getAddress(lat, long)
                 Log.d("TEST", "Address = $address")
                 from.setText(address)
+                val fromMarker = LatLng(lat!!, long!!)
+                mMap.addMarker(MarkerOptions().position(fromMarker).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fromMarker, 15f))
             }
         }
         else if ( requestCode == TO_CODE)
@@ -40,10 +63,15 @@ class OfferRide : AppCompatActivity() {
             {
                 val lat = data?.getDoubleExtra("locdatalat", 0.0)
                 val long = data?.getDoubleExtra("locdatalong", 0.0)
+                tolatD = lat!!
+                tolongD = long!!
                 Log.d("TEST", "Received $lat, $long")
                 val address = getAddress(lat, long)
                 Log.d("TEST", "Address = $address")
                 to.setText(address)
+                val toMarker = LatLng(lat!!, long!!)
+                mMap.addMarker(MarkerOptions().position(toMarker).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(toMarker, 15f))
             }
         }
     }
@@ -51,6 +79,10 @@ class OfferRide : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_offer_new_ride)
+
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.overallMap) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         fromButton.setOnClickListener {
             val intent = Intent(this, SupportMap::class.java)
@@ -75,7 +107,7 @@ class OfferRide : AppCompatActivity() {
     fun offerRide(from: String, to: String, time: String, uid: String, seats: Int)
     {
         val dbref = FirebaseFirestore.getInstance().collection("ridesOffered")
-        val ride = OfferRideObject(from, to, time, uid, seats)
+        val ride = OfferRideObject(from, to, time, uid, seats, fromlatD, fromlongD, tolatD, tolongD)
         dbref.document("$from $to $time").set(ride)
             .addOnSuccessListener {
                 Toast.makeText(this, "Ride successfully pushed to database", Toast.LENGTH_SHORT).show()
@@ -103,10 +135,6 @@ class OfferRide : AppCompatActivity() {
                 Log.d("TEST", "Addresses is not null")
                 address = addresses[0]
                 Log.d("TEST", "$address")
-//                for (i in 0 until address.maxAddressLineIndex) {
-//                    addressText += if (i == 0) address.getAddressLine(i) else "\n" + address.getAddressLine(i)
-//                    Log.d("TEST", "$addressText")
-//                }
                 addressText += address.getAddressLine(0)
             }
         } catch (e: IOException) {
