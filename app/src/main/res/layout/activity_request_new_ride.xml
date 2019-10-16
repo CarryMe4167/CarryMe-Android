@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".RequestNewRide">
 
+    <fragment
+        android:id="@+id/overallMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="371dp"
+        android:layout_height="307dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037" />
+
     <EditText
         android:id="@+id/from"
         android:layout_width="280dp"
@@ -18,55 +29,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.227" />
-
-    <EditText
-        android:id="@+id/to"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:ems="10"
-        android:hint="To"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/from"
-        app:layout_constraintStart_toStartOf="@+id/from"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.337" />
-
-    <EditText
-        android:id="@+id/pickuptime"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:ems="10"
-        android:hint="Pickup Time"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
-
-    <Button
-        android:id="@+id/requestButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Request Ride"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.833" />
-
-    <Button
-        android:id="@+id/fromButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="select"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/from"
-        app:layout_constraintTop_toTopOf="@+id/from" />
+        app:layout_constraintVertical_bias="0.521" />
 
     <Button
         android:id="@+id/toButton"
@@ -77,6 +40,57 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toEndOf="@+id/to"
-        app:layout_constraintTop_toTopOf="@+id/to" />
+        app:layout_constraintTop_toTopOf="@+id/to"
+        app:layout_constraintVertical_bias="0.937" />
+
+    <EditText
+        android:id="@+id/to"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:ems="10"
+        android:hint="To"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/from"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/from"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.631" />
+
+    <EditText
+        android:id="@+id/pickuptime"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:ems="10"
+        android:hint="Time"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.754" />
+
+    <Button
+        android:id="@+id/fromButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="select"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toEndOf="@+id/from"
+        app:layout_constraintTop_toTopOf="@+id/from" />
+
+    <Button
+        android:id="@+id/requestButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Offer Ride"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
