@@ -6,36 +6,47 @@ import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.directions.route.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_confirm_request.*
-import kotlin.to
+import java.util.ArrayList
+import com.google.android.gms.maps.model.Polyline
+import android.R.color
+import com.google.android.gms.maps.model.PolylineOptions
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
-class ConfirmRequest : AppCompatActivity(), OnMapReadyCallback {
+
+
+class ConfirmRequest : AppCompatActivity(), OnMapReadyCallback, RoutingListener {
+    override fun onRoutingSuccess(p0: ArrayList<Route>?, p1: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRoutingCancelled() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRoutingStart() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRoutingFailure(p0: RouteException?) {
+        if(p0 != null) {
+            Toast.makeText(this, "Error: " + p0.message, Toast.LENGTH_LONG).show()
+        }else {
+            Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-//        val fromMarker = LatLng(23.949032080238702, 90.38094911724329)
-//            mMap.addMarker(
-//                MarkerOptions().position(fromMarker).icon(
-//                    BitmapDescriptorFactory.defaultMarker(
-//                        BitmapDescriptorFactory.HUE_GREEN
-//                    )
-//                )
-//            )
-//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fromMarker, 15f))
-//
-//
-//        val toMarker = LatLng(23.929739297197735, 90.38922540843487)
-//        mMap.addMarker(MarkerOptions().position(toMarker).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(toMarker, 15f))
     }
 
     private lateinit var mMap: GoogleMap
@@ -61,10 +72,6 @@ class ConfirmRequest : AppCompatActivity(), OnMapReadyCallback {
                     )
                 )
             )
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fromMarker, 15f))
-        }
-
-        markTo.setOnClickListener {
             val toMarker = LatLng(ride_item_temp.tolat, ride_item_temp.tolong)
             mMap.addMarker(
                 MarkerOptions().position(toMarker).icon(
@@ -74,6 +81,10 @@ class ConfirmRequest : AppCompatActivity(), OnMapReadyCallback {
                 )
             )
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(toMarker, 15f))
+        }
+
+        showRoute.setOnClickListener {
+            drawRoute(ride_item_temp.fromlat, ride_item_temp.fromlong, ride_item_temp.tolat, ride_item_temp.tolong)
         }
 
         val fromLoc = Location("")
@@ -94,6 +105,16 @@ class ConfirmRequest : AppCompatActivity(), OnMapReadyCallback {
         confirmContact.setOnClickListener {
             getDetails(ride_item_temp.passengerUID, ride_item_temp.from, ride_item_temp.to)
         }
+    }
+
+    private fun drawRoute(fromlat: Double, fromlong: Double, tolat: Double, tolong: Double) {
+        val routing = Routing.Builder()
+            .key("AIzaSyDRzz6Ux47lbdHbCwS0xa79gagHXa_PeCw")
+            .travelMode(AbstractRouting.TravelMode.DRIVING)
+            .withListener(this)
+            .waypoints(LatLng(fromlat, fromlong), LatLng(tolat, tolong))
+            .build()
+        routing.execute()
     }
 
     fun getDetails(uid: String, from: String, to: String)
