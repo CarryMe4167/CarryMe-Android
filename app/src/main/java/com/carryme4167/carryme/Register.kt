@@ -4,19 +4,35 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.View.VISIBLE
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.emailText
+import kotlinx.android.synthetic.main.activity_register.passwordText
+import kotlinx.android.synthetic.main.activity_register.radioSelctor
+import kotlin.math.log
+import kotlinx.android.synthetic.main.activity_register.driverButton as driverButton1
 
 class Register : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        radioSelctor.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { radioGroup, i ->
+           if(driverButton.isChecked) {
+               drivingLicenceText.visibility = View.VISIBLE
+           }
+            else{
+               drivingLicenceText.visibility = View.INVISIBLE
+           }
+        })
 
         registerButton.setOnClickListener {
             val username = usernameText.text.toString()
@@ -25,7 +41,6 @@ class Register : AppCompatActivity() {
             val phone = phoneText.text.toString()
             val nid = nidText.text.toString()
             val drivingLicence = drivingLicenceText.text.toString()
-
             val cat = findViewById<RadioButton>(radioSelctor.checkedRadioButtonId)
             val category = cat.text.toString()
             Log.d("DEETS", "$username $email $password $phone $nid $drivingLicence $category")

@@ -8,6 +8,11 @@
         tools:context=".LoginRegister">
 
     <TextView
+        android:background="@color/orange_red"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textAlignment="center"
         android:id="@+id/frontText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,21 +28,21 @@
         app:layout_constraintVertical_bias="0.287" />
 
     <Button
-        android:background="@drawable/rounded_button"
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_button"
         android:text="Register"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.211"
+        app:layout_constraintHorizontal_bias="0.228"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frontText"
-        app:layout_constraintVertical_bias="0.581" />
+        app:layout_constraintVertical_bias="0.472" />
 
     <Button
 
@@ -52,7 +57,7 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.785"
+        app:layout_constraintHorizontal_bias="0.791"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/registerButton"
         app:layout_constraintVertical_bias="0.0" />

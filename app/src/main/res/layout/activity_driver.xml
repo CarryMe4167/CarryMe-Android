@@ -10,45 +10,53 @@
     <fragment
         android:id="@+id/driverMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="371dp"
-        android:layout_height="307dp"
+        android:layout_width="413dp"
+        android:layout_height="297dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-            android:text="Sign Out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/signOutBUtton" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.95"
-            app:layout_constraintVertical_bias="0.023"/>
+        android:textColor="@color/orange_red"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:id="@+id/signOutBUtton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.054" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/requestedRidesRecycler"
-        android:layout_width="382dp"
+        android:layout_width="399dp"
         android:layout_height="216dp"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintHorizontal_bias="0.586"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.84" />
+        app:layout_constraintTop_toBottomOf="@+id/driverMap"
+        app:layout_constraintVertical_bias="0.169" />
 
     <Button
         android:id="@+id/newRideOfferButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="156dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="72dp"
+        android:background="@drawable/rounded_button"
         android:text="Offer New Ride"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/requestedRidesRecycler"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.556"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintTop_toBottomOf="@+id/requestedRidesRecycler"
+        app:layout_constraintVertical_bias="0.803" />
 </androidx.constraintlayout.widget.ConstraintLayout>
