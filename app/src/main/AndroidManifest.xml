@@ -34,10 +34,10 @@
         <activity android:name=".OfferRide" />
         <activity android:name=".Passenger" />
         <activity android:name=".Driver" />
-        <activity android:name=".Register" />
-        <activity android:name=".Login" />
+        <activity android:name=".Register" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".Login" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".LoginRegister" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:theme="@style/NoTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

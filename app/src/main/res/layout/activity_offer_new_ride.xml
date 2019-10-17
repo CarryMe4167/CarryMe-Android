@@ -9,94 +9,102 @@
     <fragment
         android:id="@+id/overallMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="371dp"
-        android:layout_height="307dp"
+        android:layout_width="429dp"
+        android:layout_height="305dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/seats"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_width="364dp"
+        android:layout_height="62dp"
         android:ems="10"
         android:hint="Seats"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.884" />
+        app:layout_constraintVertical_bias="0.874" />
 
     <EditText
         android:id="@+id/from"
         android:layout_width="280dp"
-        android:layout_height="64dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="From"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.122"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintTop_toBottomOf="@+id/overallMap"
+        app:layout_constraintVertical_bias="0.151" />
 
     <Button
         android:id="@+id/toButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/orange_red"
         android:text="select"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/to"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toEndOf="@+id/to"
         app:layout_constraintTop_toTopOf="@+id/to"
-        app:layout_constraintVertical_bias="0.937" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/to"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="67dp"
         android:ems="10"
         android:hint="To"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/from"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/from"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.631" />
+        app:layout_constraintTop_toBottomOf="@+id/overallMap"
+        app:layout_constraintVertical_bias="0.318" />
 
     <EditText
         android:id="@+id/time"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_width="364dp"
+        android:layout_height="62dp"
         android:ems="10"
         android:hint="Time"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.754" />
+        app:layout_constraintVertical_bias="0.757" />
 
     <Button
         android:id="@+id/fromButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:background="@color/orange_red"
         android:text="select"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/toButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toEndOf="@+id/from"
-        app:layout_constraintTop_toTopOf="@+id/from" />
+        app:layout_constraintTop_toTopOf="@+id/from"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_button"
         android:id="@+id/offerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
