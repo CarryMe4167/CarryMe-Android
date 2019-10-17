@@ -175,7 +175,6 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     }
 
     fun placeMarkersOnMap() {
-        mMap.clear()
         val dbref = FirebaseFirestore.getInstance().collection("locationUpdatesPassengers")
         dbref.addSnapshotListener { snap, e ->
             if ( e != null )
@@ -184,6 +183,7 @@ class Driver : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             }
             else
             {
+                mMap.clear()
                 for ( doc in snap!! )
                 {
                     val locationObj = doc.toObject(LocationData::class.java)

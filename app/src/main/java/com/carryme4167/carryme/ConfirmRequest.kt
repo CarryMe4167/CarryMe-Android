@@ -133,12 +133,12 @@ class ConfirmRequest : AppCompatActivity(), OnMapReadyCallback, RoutingListener 
         toLoc.latitude = ride_item_temp.tolat
         toLoc.longitude = ride_item_temp.tolong
 
-        val ridecost = fromLoc.distanceTo(toLoc) * 0.5
+        val ridecost = fromLoc.distanceTo(toLoc) * 0.02
 
-        from.setText(ride_item_temp.from.toString())
-        to.setText(ride_item_temp.to.toString())
-        pickuptime.setText(ride_item_temp.pickuptime.toString())
-        cost.setText(ridecost.toString())
+        from.setText("From: ${ride_item_temp.from.toString()}")
+        to.setText("To: ${ride_item_temp.to.toString()}")
+        pickuptime.setText("Pickup time: ${ride_item_temp.pickuptime.toString()}")
+        cost.setText("Fare: BDT ${ridecost.toString()}")
 
         confirmContact.setOnClickListener {
             getDetails(ride_item_temp.passengerUID, ride_item_temp.from, ride_item_temp.to)
