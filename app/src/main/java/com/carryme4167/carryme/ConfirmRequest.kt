@@ -68,11 +68,9 @@ class ConfirmRequest : AppCompatActivity(), OnMapReadyCallback, RoutingListener 
     )
 
     override fun onRoutingCancelled() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onRoutingStart() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onRoutingFailure(p0: RouteException?) {
