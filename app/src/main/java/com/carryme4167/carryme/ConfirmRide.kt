@@ -33,11 +33,9 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 class ConfirmRide : AppCompatActivity(), OnMapReadyCallback, RoutingListener {
     override fun onRoutingCancelled() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onRoutingStart() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onRoutingFailure(p0: RouteException?) {
@@ -67,7 +65,7 @@ class ConfirmRide : AppCompatActivity(), OnMapReadyCallback, RoutingListener {
         mapFragment.getMapAsync(this)
 
         val ride_item_temp = intent.getParcelableExtra<OfferRideObject>("Ride")
-        Toast.makeText(this, "${ride_item_temp.from.toString()} to ${ride_item_temp.to.toString()} at ${ride_item_temp.time.toString()} for ${Integer.parseInt(ride_item_temp.seats.toString())}", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "${ride_item_temp.from.toString()} to ${ride_item_temp.to.toString()} at ${ride_item_temp.time.toString()} for ${Integer.parseInt(ride_item_temp.seats.toString())}", Toast.LENGTH_SHORT).show()
 
         markFrom.setOnClickListener {
             val fromMarker = LatLng(ride_item_temp.fromlat, ride_item_temp.fromlong)
@@ -101,13 +99,13 @@ class ConfirmRide : AppCompatActivity(), OnMapReadyCallback, RoutingListener {
         toLoc.latitude = ride_item_temp.tolat
         toLoc.longitude = ride_item_temp.tolong
 
-        val ridecost = fromLoc.distanceTo(toLoc) * 0.5
+        val ridecost = fromLoc.distanceTo(toLoc) * 0.02
 
-        from.setText(ride_item_temp.from.toString())
-        to.setText(ride_item_temp.to.toString())
-        time.setText(ride_item_temp.time.toString())
-        seats.setText(ride_item_temp.seats.toString())
-        cost.setText(ridecost.toString())
+        from.setText("From: ${ride_item_temp.from.toString()}")
+        to.setText("To: ${ride_item_temp.to.toString()}")
+        time.setText("Time: ${ride_item_temp.time.toString()}")
+        seats.setText("Number of seats: ${ride_item_temp.seats.toString()}")
+        cost.setText("Fare: BDT ${ridecost.toString()}")
 
         confirmContact.setOnClickListener {
             getDetails(ride_item_temp.driverUID, ride_item_temp.from, ride_item_temp.to)
